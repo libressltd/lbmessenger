@@ -73,6 +73,7 @@ active
 @push('script')
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
 <script type="text/javascript">
+	@if (isset($conversation))
 	$(document).ready(function() {
 		$('#textarea-expand').on('keyup', function(e) {
 		    if (e.which == 13 && ! e.shiftKey) {
@@ -108,6 +109,7 @@ active
 		    });
 	    }, 3000);
 	});
+	@endif
 
 	bfapp.controller('ConversationController', function($scope, $http) {
 
