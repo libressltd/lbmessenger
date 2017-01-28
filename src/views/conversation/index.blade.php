@@ -12,11 +12,11 @@ active
         		<a href="/lbmessenger/conversation/@{{ conversation.id }}/item" ng-repeat="conversation in conversations" ng-cloak>
 					<div class="panel-body status">
 						<div class="who clearfix" ng-if="conversation.last_user_id == null">
-							<img src="https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png" alt="img" class="online">
+							<img src="https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png" alt="img">
 							<span class="name"><b>New conversation</b></span>
 						</div>
 						<div class="who clearfix" ng-if="conversation.last_user_id">
-							<img src="/lbmedia/@{{ conversation.last_user.avatar.id }}" alt="img" class="online">
+							<img src="/lbmedia/@{{ conversation.last_user.avatar.id }}" alt="img">
 							<span class="name"><b>@{{ conversation.last_user.name }}</b>: @{{ conversation.last_content }}</span>
 							<span class="from"><b>@{{ conversation.updated_at }}</b></span>
 						</div>
@@ -42,10 +42,10 @@ active
 						<div id="chat-body" class="chat-body custom-scroll" style="height: calc(100vh - 330px);" ng-cloak>
 							<ul>
 								<li class="message" ng-repeat="item in items">
-									<img src="/lbmedia/@{{ item.creator.avatar.id }}" class="online" alt="" width="50" height="50">
+									<img src="/lbmedia/@{{ item.creator.avatar.id }}" alt="" width="50" height="50">
 									<div class="message-text">
 										<time>
-											2014-01-13
+											@{{ item.created_at }}
 										</time> <a href="javascript:void(0);" class="username">@{{ item.creator.name }}</a>
 										@{{ item.content }}
 									</div>
@@ -79,7 +79,7 @@ active
 	$(document).ready(function() {
 		$('#textarea-expand').on('keyup', function(e) {
 		    if (e.which == 13 && ! e.shiftKey) {
-		    	$.post("/lbmessenger/ajax/conversation/{{ $conversation->id }}/item", {content: this.value}, function(data) {
+		    	$.post("/lbmessenger/ajax/conversation/{{ $conversation->id }}/item", {content: trim(this.value)}, function(data) {
 		    		console.log(data);
 		    	}, "json");
 	    		$('#textarea-expand').val('');
