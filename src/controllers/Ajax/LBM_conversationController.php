@@ -15,7 +15,7 @@ class LBM_conversationController extends Controller
      */
     public function index()
     {
-        $conversations = LBM_conversation::with("last_user", "last_user.avatar")->orderBy("updated_at", "desc")->get();
+        $conversations = LBM_conversation::with("last_user", "last_user.avatar", "users")->orderBy("updated_at", "desc")->get();
         return $conversations;
     }
 

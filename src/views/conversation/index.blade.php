@@ -13,12 +13,20 @@ active
 					<div class="panel-body status">
 						<div class="who clearfix" ng-if="conversation.last_user_id == null">
 							<img src="https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png" alt="img">
-							<span class="name"><b>New conversation</b></span>
+							<span class="name">
+								<b ng-repeat="user in conversation.users">
+									@{{ user.name }}
+								</b>
+							</span>
 						</div>
 						<div class="who clearfix" ng-if="conversation.last_user_id">
 							<img src="/lbmedia/@{{ conversation.last_user.avatar.id }}" alt="img">
-							<span class="name"><b>@{{ conversation.last_user.name }}</b>: @{{ conversation.last_content }}</span>
-							<span class="from"><b>@{{ conversation.updated_at }}</b></span>
+							<span class="name">
+								<b ng-repeat="user in conversation.users">
+									@{{ user.name }}
+								</b>
+							</span>
+							<span class="from"><b>@{{ conversation.last_content }}</b></span>
 						</div>
 					</div>
 				</a>
