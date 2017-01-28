@@ -4,46 +4,75 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Alsofronie\Uuid\Uuid32ModelTrait;
+use App\Models\LBM_conversation_item;
 use Auth;
 
-class LBM_conversation_item extends Model
+class LBM_conversation extends Model
 {
     use Uuid32ModelTrait;
 
-    protected $table = "LBM_conversation_items";
+    protected $table = "LBM_conversations";
 
-    public function conversation()
+    public function items()
     {
-        return $this->belongsTo("App\Models\LBM_conversation", "conversation_id");
+        return $this->hasMany("App\Models\LBM_conversation_item", "conversation_id")->orderBy("created_at");
     }
 
-    public function creator()
+    public function users()
     {
-        return $this->belongsTo("App\Models\User", "created_by");
+        return $this->belongsToMany("App\Models\User", "LBM_conversation_users", "conversation_id", "user_id");
+    }
+
+    public function last_user()
+    {
+        return $this->belongsTo("App\Models\User", "last_user_id");
+    }
+
+    public function addMessage($content, $user = false)
+    {
+        if (!$user && Auth::user())
+        {
+            $user = Auth::user();
+        }
+        $item = new LBM_conversation_item;
+        $item->conversation_id = $this->id;
+        $item->content = $content;
+        $item->save();
+    }
+
+    public function scopeHasUsers($query, $users)
+    {
+        foreach ($users as $user)
+        {
+            if (get_class($user) === "App\Models\User")
+            {
+                $query = $query->whereHas("users", function ($query) use ($user) {
+                    $query->where("id", $user->id);
+                });
+            }
+            else
+            {
+                $query = $query->whereHas("users", function ($query) use ($user) {
+                    $query->where("id", $user);
+                });
+            }
+        }
+        return $query;
     }
 
     static public function boot()
     {
-        LBM_conversation_item::bootUuid32ModelTrait();
-        LBM_conversation_item::saving(function ($item) {
+        LBM_conversation::bootUuid32ModelTrait();
+        LBM_conversation::saving(function ($conversation) {
             if (Auth::user())
             {
-                if ($item->id)
+                if ($conversation->id)
                 {
-                    $item->updated_by = Auth::user()->id;
+                    $conversation->updated_by = Auth::user()->id;
                 }
                 else
                 {
-                    $item->created_by = Auth::user()->id;
-                    $conversation = $item->conversation;
-                    $conversation->last_user_id = $item->created_by;
-                    $conversation->last_content = $item->content;
-                    $conversation->save();
-                }
-                $item->conversation->users()->syncWithoutDetaching([Auth::user()->id]);
-                foreach ($item->conversation->users as $user)
-                {
-                    $user->notification($item->creator->name, $item->content);
+                    $conversation->created_by = Auth::user()->id;
                 }
             }
         });

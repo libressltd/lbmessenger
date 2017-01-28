@@ -23,7 +23,7 @@ active
 							<img src="/lbmedia/@{{ conversation.last_user.avatar.id }}" alt="img">
 							<span class="name">
 								<b ng-repeat="user in conversation.users">
-									@{{ user.name }}
+									@{{ user.name }}, 
 								</b>
 							</span>
 							<span class="from"><b>@{{ conversation.last_content }}</b></span>

@@ -24,24 +24,28 @@ class LBM_conversation_item extends Model
 
     static public function boot()
     {
-    	LBM_conversation_item::bootUuid32ModelTrait();
+        LBM_conversation_item::bootUuid32ModelTrait();
         LBM_conversation_item::saving(function ($item) {
-        	if (Auth::user())
-        	{
-	            if ($item->id)
-	            {
-	            	$item->updated_by = Auth::user()->id;
-	            }
-	            else
-	            {
-					$item->created_by = Auth::user()->id;
+            if (Auth::user())
+            {
+                if ($item->id)
+                {
+                    $item->updated_by = Auth::user()->id;
+                }
+                else
+                {
+                    $item->created_by = Auth::user()->id;
                     $conversation = $item->conversation;
                     $conversation->last_user_id = $item->created_by;
                     $conversation->last_content = $item->content;
                     $conversation->save();
-	            }
+                }
                 $item->conversation->users()->syncWithoutDetaching([Auth::user()->id]);
-	        }
+                foreach ($item->conversation->users as $user)
+                {
+                    $user->notification($item->creator->name, $item->content);
+                }
+            }
         });
     }
 }
