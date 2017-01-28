@@ -87,7 +87,7 @@ active
 	$(document).ready(function() {
 		$('#textarea-expand').on('keyup', function(e) {
 		    if (e.which == 13 && ! e.shiftKey) {
-		    	$.post("/lbmessenger/ajax/conversation/{{ $conversation->id }}/item", {content: trim(this.value)}, function(data) {
+		    	$.post("/lbmessenger/ajax/conversation/{{ $conversation->id }}/item", {content: this.value}, function(data) {
 		    		console.log(data);
 		    	}, "json");
 	    		$('#textarea-expand').val('');

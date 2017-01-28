@@ -38,7 +38,7 @@ class LBM_conversationItemController extends Controller
     public function store(Request $request, $conversation_id)
     {
         $conversation = LBM_conversation::findOrFail($conversation_id);
-        $conversation->addMessage($request->content);
+        $conversation->addMessage(trim($request->content));
         return ["code" => 200, "description" => "Success"];
     }
 
