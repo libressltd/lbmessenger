@@ -15,7 +15,7 @@ active
 							<img src="https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png" alt="img">
 							<span class="name">
 								<b ng-repeat="user in conversation.users">
-									@{{ user.name }}
+									@{{ user.name }}, 
 								</b>
 							</span>
 						</div>
@@ -37,15 +37,13 @@ active
 	        <div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-1" data-widget-editbutton="false" data-widget-fullscreenbutton="false">
 				<header>
 					<span class="widget-icon"> <i class="fa fa-comments txt-color-white"></i> </span>
-					<h2> SmartChat </h2>
+					<h2>
+						@foreach ($conversation->users as $user)
+						{{ $user->name }}, 
+						@endforeach
+					</h2>
 				</header>
 				<div>
-					<div class="jarviswidget-editbox">
-						<div>
-							<label>Title:</label>
-							<input type="text" />
-						</div>
-					</div>
 					<div class="widget-body widget-hide-overflow no-padding">
 						<div id="chat-body" class="chat-body custom-scroll" style="height: calc(100vh - 330px);" ng-cloak>
 							<ul>

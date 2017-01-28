@@ -6,7 +6,8 @@
         "guzzlehttp/guzzle": "*",
         "libressltd/lbsa": "*",
         "alsofronie/eloquent-uuid": "*",
-        "libressltd/lbform": "*"
+        "libressltd/lbform": "*",
+        "libressltd/lbpushcenter": "*"
     },
     "license": "MIT",
     "authors": [
