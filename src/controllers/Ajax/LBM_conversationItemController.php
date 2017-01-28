@@ -16,7 +16,7 @@ class LBM_conversationItemController extends Controller
     public function index($conversation_id)
     {
         $conversation = LBM_conversation::findOrFail($conversation_id);
-        return $conversation->items()->with("user")->get();
+        return $conversation->items()->with("creator", "creator.avatar")->get();
     }
 
     /**

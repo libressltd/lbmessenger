@@ -17,7 +17,7 @@ class LBM_conversation_item extends Model
         return $this->belongsTo("App\Models\LBM_conversation", "conversation_id");
     }
 
-    public function user()
+    public function creator()
     {
         return $this->belongsTo("App\Models\User", "created_by");
     }
