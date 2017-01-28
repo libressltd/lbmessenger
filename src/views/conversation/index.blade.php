@@ -9,7 +9,7 @@ active
     <div class="row">
         <article class="col-md-4" ng-controller="ConversationController">
         	<div class="panel panel-default" style="height: calc(100vh - 191px);" id="chat-conversation">
-        		<a href="/lbmessenger/conversation/@{{ conversation.id }}/item" ng-repeat="conversation in conversations">
+        		<a href="/lbmessenger/conversation/@{{ conversation.id }}/item" ng-repeat="conversation in conversations" ng-cloak>
 					<div class="panel-body status">
 						<div class="who clearfix" ng-if="conversation.last_user_id == null">
 							<img src="img/avatars/sunny.png" alt="img" class="online">
@@ -18,7 +18,7 @@ active
 						<div class="who clearfix" ng-if="conversation.last_user_id">
 							<img src="img/avatars/sunny.png" alt="img" class="online">
 							<span class="name"><b>@{{ conversation.last_user.name }}</b>: @{{ conversation.last_content }}</span>
-							<span class="from"><b>1 days ago</b></span>
+							<span class="from"><b>@{{ conversation.updated_at }}</b></span>
 						</div>
 					</div>
 				</a>
@@ -39,7 +39,7 @@ active
 						</div>
 					</div>
 					<div class="widget-body widget-hide-overflow no-padding">
-						<div id="chat-body" class="chat-body custom-scroll" style="height: calc(100vh - 330px);">
+						<div id="chat-body" class="chat-body custom-scroll" style="height: calc(100vh - 330px);" ng-cloak>
 							<ul>
 								<li class="message" ng-repeat="item in items">
 									<img src="img/avatars/sunny.png" class="online" alt="" width="50" height="50">
@@ -73,6 +73,8 @@ active
 @push('script')
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
 <script type="text/javascript">
+	var bfapp = angular.module('BFApp', []);
+
 	@if (isset($conversation))
 	$(document).ready(function() {
 		$('#textarea-expand').on('keyup', function(e) {
@@ -84,7 +86,6 @@ active
 		    }
 		});
 	});
-	var bfapp = angular.module('BFApp', []);
 
 	bfapp.controller('ConversationItemController', function($scope, $http) {
 

@@ -40,6 +40,26 @@ class LBM_conversation extends Model
     	$item->save();
     }
 
+    public function scopeHasUsers($query, $users)
+    {
+        foreach ($users as $user)
+        {
+            if (get_class($user) === "App\Models\User")
+            {
+                $query = $query->whereHas("users", function ($query) use ($user) {
+                    $query->where("id", $user->id);
+                });
+            }
+            else
+            {
+                $query = $query->whereHas("users", function ($query) use ($user) {
+                    $query->where("id", $user);
+                });
+            }
+        }
+        return $query;
+    }
+
     static public function boot()
     {
     	LBM_conversation::bootUuid32ModelTrait();
