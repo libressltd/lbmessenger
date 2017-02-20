@@ -8,7 +8,7 @@ active
 <section id="widget-grid" class="" ng-app="BFApp">
     <div class="row">
         <article class="col-md-4" ng-controller="ConversationController">
-        	<div class="panel panel-default" style="height: calc(100vh - 191px);" id="chat-conversation">
+        	<div class="panel panel-default" style="height: calc(100vh - 191px); overflow-y: auto;" id="chat-conversation">
         		<a href="/lbmessenger/conversation/@{{ conversation.id }}/item" ng-repeat="conversation in conversations" ng-cloak>
 					<div class="panel-body status">
 						<div class="who clearfix" ng-if="conversation.last_user_id == null">
