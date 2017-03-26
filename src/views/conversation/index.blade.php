@@ -95,7 +95,7 @@ active
 
 	bfapp.controller('ConversationItemController', function($scope, $http) {
 
-	    $http.get("{{ url("/lbmessenger/ajax/conversation/$conversation->id/item") }}".then(function (response) {
+	    $http.get("{{ url("/lbmessenger/ajax/conversation/$conversation->id/item") }}").then(function (response) {
 	    	$scope.items = response.data;
 	    	setTimeout(function() {
 		    	var scroller = document.getElementById("chat-body");
