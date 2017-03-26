@@ -20,7 +20,7 @@ active
 							</span>
 						</div>
 						<div class="who clearfix" ng-if="conversation.last_user_id">
-							<img src="/lbmedia/@{{ conversation.last_user.avatar.id }}&style=scale_to_fill" alt="img">
+							<img src="/lbmedia/@{{ conversation.last_user.avatar.id }}?width=50&height=50&style=scale_to_fill" alt="img">
 							<span class="name">
 								<b ng-repeat="user in conversation.users">
 									@{{ user.name }}, 
