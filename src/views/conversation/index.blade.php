@@ -48,7 +48,7 @@ active
 						<div id="chat-body" class="chat-body custom-scroll" style="height: calc(100vh - 330px);" ng-cloak>
 							<ul>
 								<li class="message" ng-repeat="item in items">
-									<img src="/lbmedia/@{{ item.creator.avatar.id }}" alt="" width="50" height="50">
+									<img src="/lbmedia/@{{ item.creator.avatar.id }}" alt="" style="width: 50px; height: 50px;">
 									<div class="message-text">
 										<time>
 											@{{ item.created_at }}
@@ -85,7 +85,7 @@ active
 	$(document).ready(function() {
 		$('#textarea-expand').on('keyup', function(e) {
 		    if (e.which == 13 && ! e.shiftKey) {
-		    	$.post("/lbmessenger/ajax/conversation/{{ $conversation->id }}/item", {content: this.value}, function(data) {
+		    	$.post("{{ url("/lbmessenger/ajax/conversation/$conversation->id/item") }}", {content: this.value}, function(data) {
 		    		console.log(data);
 		    	}, "json");
 	    		$('#textarea-expand').val('');
@@ -95,7 +95,7 @@ active
 
 	bfapp.controller('ConversationItemController', function($scope, $http) {
 
-	    $http.get("/lbmessenger/ajax/conversation/{{ $conversation->id }}/item").then(function (response) {
+	    $http.get("{{ url("/lbmessenger/ajax/conversation/$conversation->id/item") }}".then(function (response) {
 	    	$scope.items = response.data;
 	    	setTimeout(function() {
 		    	var scroller = document.getElementById("chat-body");
@@ -104,7 +104,7 @@ active
 	    });
 
 	    setInterval(function() {
-		    $http.get("/lbmessenger/ajax/conversation/{{ $conversation->id }}/item").then(function (response) {
+		    $http.get("{{ url("/lbmessenger/ajax/conversation/$conversation->id/item") }}").then(function (response) {
 		    	if ($scope.items.length != response.data.length)
 		    	{
 			    	$scope.items = response.data;
