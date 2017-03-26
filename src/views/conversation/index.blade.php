@@ -48,7 +48,7 @@ active
 						<div id="chat-body" class="chat-body custom-scroll" style="height: calc(100vh - 330px);" ng-cloak>
 							<ul>
 								<li class="message" ng-repeat="item in items">
-									<img src="/lbmedia/@{{ item.creator.avatar.id }}" alt="" style="width: 50px; height: 50px;">
+									<img src="/lbmedia/@{{ item.creator.avatar.id }}?width=50&height=50&style=scale_to_fill" alt="" style="width: 50px; height: 50px;">
 									<div class="message-text">
 										<time>
 											@{{ item.created_at }}
