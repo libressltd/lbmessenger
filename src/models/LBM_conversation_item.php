@@ -43,7 +43,10 @@ class LBM_conversation_item extends Model
                 $item->conversation->users()->syncWithoutDetaching([Auth::user()->id]);
                 foreach ($item->conversation->users as $user)
                 {
-                    $user->notification($item->creator->name, $item->content);
+                    if ($user->id != $item->creator->id)
+                    {
+                        $user->notification($item->creator->name, $item->content);
+                    }
                 }
             }
         });
